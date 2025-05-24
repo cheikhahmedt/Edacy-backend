@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  db:
+    container_name: handle-product-db
+    image: postgres:16
+    ports:
+      - "5434:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: handle-product-pg
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    restart: always
+    ports:
+      - "82:80"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
